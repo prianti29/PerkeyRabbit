@@ -38,7 +38,23 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'post' => 'required|max:255',
+            
+        ]);
+        $post = new Post();
+        $post->name = $request->title;
+        $post->details = $request->content;
+        if (!empty($request->post)) {
+            $file = $request->file('post');
+            $extension = $file->getClientOriginalExtension();
+            $filename = time() . '.' . $extension;
+            $file->move(public_path('uploads/'), $filename);
+            $post->post = 'uploads/' . $filename;
+        }       
+        $post->user_id = $request->user_id;
+        $post->save();
+        return redirect('/addpost');
     }
 
     /**
