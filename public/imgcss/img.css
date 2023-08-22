@@ -1,0 +1,24 @@
+.img1{
+    height: 70px;
+    width: 100px;
+    margin: auto;
+}
+/* .dlt-btn{
+    margin-top: 5px;
+    width: 70px;
+} */
+.edit-input{
+    /* margin: auto; */
+    width: 18pc;
+    height: 2pc;
+    margin-right: 10px;
+    border-color: darkgrey;
+    padding-left:5px ;
+    color: rgb(100, 98, 98);
+}
+.custom-btn{
+ margin-left: 10px;
+}
+.button-container{
+    display: flex;
+}

@@ -25,18 +25,17 @@
     <div class="form-group">
         <label class="control-label col-sm-2" for="pwd">Content:</label>
         <div class="col-sm-10">
-            <input type="text" class="edit-input" id="pwd" placeholder="Enter Post Content" name="content">
+            <textarea name="content" id="pwd" class="edit-input" cols="30" rows="10" type="text"
+                placeholder="Enter Post Content"></textarea>
         </div>
     </div>
     <div class="form-group">
         <label class="control-label col-sm-2" for="pwd">Image:</label>
         <div class="col-sm-10">
-            <input type="file" class="edit-input" id="pwd" placeholder="Enter Image" name="image"
+            <input type="file" id="pwd" placeholder="Enter Image" name="image"
                 style="margin-top: 7px">
         </div>
     </div>
-
-
 
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">

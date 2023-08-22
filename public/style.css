@@ -1,0 +1,21 @@
+/* .img1{
+    height: 40px;
+    width: 50px;
+} */
+/* Styles for pagination links */
+.pagination {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.pagination li {
+    margin: 0 5px;
+    list-style: none;
+}
+.pagination li.active {
+    font-weight: bold;
+}
+.pagination li.disabled {
+    color: #888888;
+}

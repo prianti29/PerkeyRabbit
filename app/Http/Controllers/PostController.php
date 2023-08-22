@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
 
 class PostController extends Controller
 {
@@ -13,9 +14,14 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data['post_list'] = Post::get();
+        $search = $request->input('search');
+        $data['post_list'] = Post::with('user')
+            ->when($search, function ($query) use ($search) {
+                $query->where('title', 'like', '%' . $search . '%');
+            })->paginate(5);
+          //  dd($data);
         return view('post.index', $data);
     }
     /**
@@ -41,7 +47,6 @@ class PostController extends Controller
         $validated = $request->validate([
             'title' => 'required|max:255',
             'content' => 'required|max:255',
-
         ]);
         $post = new Post();
         $post->title = $request->title;
@@ -53,7 +58,7 @@ class PostController extends Controller
             $file->move(public_path('uploads/'), $filename);
             $post->image = 'uploads/' . $filename;
         }
-     //   dd($post);
+        //   dd($post);
         $post->user_id = $request->user_id;
 
         $post->save();
@@ -84,9 +89,9 @@ class PostController extends Controller
         if (!$post) {
             return redirect("/addpost");
         }
-        //$post["post"] = $post;
+        $post["post"] = $post;
         $post["user_list"] = User::get();
-        dd($post);
+        //dd($post);
         return view('post.edit', $post);
     }
 
