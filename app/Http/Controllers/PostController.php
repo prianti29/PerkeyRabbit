@@ -18,7 +18,6 @@ class PostController extends Controller
         $data['post_list'] = Post::get();
         return view('post.index', $data);
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -27,7 +26,7 @@ class PostController extends Controller
     public function create()
     {
         $data["user_list"] = User::get();
-        return view('post.create',$data);
+        return view('post.create', $data);
     }
 
     /**
@@ -38,21 +37,25 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
         $validated = $request->validate([
-            'post' => 'required|max:255',
-            
+            'title' => 'required|max:255',
+            'content' => 'required|max:255',
+
         ]);
         $post = new Post();
-        $post->name = $request->title;
-        $post->details = $request->content;
-        if (!empty($request->post)) {
-            $file = $request->file('post');
+        $post->title = $request->title;
+        $post->content = $request->content;
+        if (!empty($request->file('image'))) {
+            $file = $request->file('image');
             $extension = $file->getClientOriginalExtension();
             $filename = time() . '.' . $extension;
             $file->move(public_path('uploads/'), $filename);
-            $post->post = 'uploads/' . $filename;
-        }       
+            $post->image = 'uploads/' . $filename;
+        }
+     //   dd($post);
         $post->user_id = $request->user_id;
+
         $post->save();
         return redirect('/addpost');
     }
@@ -76,7 +79,15 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = Post::find($id);
+        //dd($post);
+        if (!$post) {
+            return redirect("/addpost");
+        }
+        //$post["post"] = $post;
+        $post["user_list"] = User::get();
+        dd($post);
+        return view('post.edit', $post);
     }
 
     /**
@@ -88,7 +99,22 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $post = Post::find($id);
+        if (!$post) {
+            return redirect("/addImage");
+        }
+        $post->title = $request->title;
+        $post->content = $request->content;
+        if (!empty($request->post)) {
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension();
+            $filename = time() . '.' . $extension;
+            $file->move(public_path('uploads/'), $filename);
+            $post->image = 'uploads/' . $filename;
+        }
+        $post->user_id = $request->user_id;
+        $post->save();
+        return redirect("/addImage");
     }
 
     /**
@@ -99,6 +125,11 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::find($id);
+        if (!$post) {
+            return redirect("/addpost");
+        }
+        $post->delete();
+        return redirect("/addpost");
     }
 }

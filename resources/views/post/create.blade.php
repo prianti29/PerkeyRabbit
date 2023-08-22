@@ -2,13 +2,12 @@
 @section('contents')
 <h3>Add new Post</h3>
 <hr>
-<form class="form-horizontal" action="{{ url('/addpost') }}" method="POST" 
-enctype="multipart/form-data">
+<form class="form-horizontal" action="{{ url('/addpost') }}" method="POST" enctype="multipart/form-data">
     @csrf
     <div class="form-group">
         <label class="control-label col-sm-2">User Name:</label>
         <div class="col-sm-10">
-            <select name="author_id" class="edit-input">
+            <select name="user_id" class="edit-input">
                 <option value="">--Select a User---</option>
                 @foreach ($user_list as $item)
                 <option value="{{ $item->id }}" {{old('user_id') ==$item->id ? 'selected' : ''}}> {{ $item->name }}
@@ -36,16 +35,6 @@ enctype="multipart/form-data">
                 style="margin-top: 7px">
         </div>
     </div>
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -23,4 +23,8 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 Route::get('/addpost', [PostController::class, 'index'])->middleware(['auth']);
 Route::get('/addpost/create', [PostController::class, 'create'])->middleware(['auth']);
-require __DIR__.'/auth.php';
+Route::post('/addpost', [PostController::class, 'store'])->middleware(['auth']);
+Route::get('/addpost/{id}/edit', [PostController::class, 'edit'])->middleware(['auth']);
+Route::put('/addpost/{id}', [PostController::class, 'update'])->middleware(['auth']);
+Route::delete('/addpost/{id}', [PostController::class, 'destroy'])->middleware(['auth']);
+require __DIR__ . '/auth.php';

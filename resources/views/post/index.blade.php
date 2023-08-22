@@ -13,14 +13,15 @@
 
     @foreach($post_list as $item)
     <tr>
-        <td>{{$item->user->name}}</td>
+        {{-- <td>{{ optional($item->user)->name }}</td> --}}
+        <td>{{ $item->user_id}}</td>
         <td>{{$item->title}}</td>
         <td>{{$item->content}}</td>
-        <td><img src="{{url("/$item->post")}}" class="img1"></td>
+        <td><img src="{{url("/$item->image")}}" class="img1"></td>
         <td>
-            <a href={{ url("") }} class="btn btn-warning btn-sm action-btn">Update</a>
-            <form action="" method="POST" onsubmit="return confirm('Do you really want to delete this category?');"
-                class="action-btn">
+            <a href="{{ url("/addpost/$item->id/edit") }}" class="btn btn-warning btn-sm action-btn">Update</a>
+            <form action="{{ url("/addpost/$item->id")}}" method="POST"
+                onsubmit="return confirm('Do you really want to delete this category?');" class="action-btn">
                 @csrf
                 @method('delete')
                 <input type="submit" value="Delete" class="btn btn-danger btn-sm">
