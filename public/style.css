@@ -20,7 +20,7 @@
 
 /* index */
 .post-list-container {
-    max-width: 800px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
     border: 1px solid #e0e0e0;
@@ -78,11 +78,12 @@
 
 .action-btn {
     flex-grow: 1;
+
 }
 
 /* create */
 .post-form-container {
-    max-width: 600px;
+    max-width: 800px;
     margin: 0 auto;
     padding: 20px;
     border: 1px solid #e0e0e0;
