@@ -1,44 +1,39 @@
 @extends('layouts.app')
-@section('contents')
-<h3>Edit Post</h3>
-<hr>
-<form class="form-horizontal" action="{{ url("/addpost/$post->id") }}" method="POST" enctype="multipart/form-data"
-    class="edit-form">
-    @method("put")
-    @csrf
-    <div class="form-group">
-        <label class="control-label col-sm-2" for="email">User:</label>
-        <div class="col-sm-10">
-            <input type="text" class="edit-input" id="email" placeholder="Enter post title"
-                value="{{$post->user->name}}" name="user_id">
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="control-label col-sm-2" for="email">Title:</label>
-        <div class="col-sm-10">
-            <input type="text" class="edit-input" id="email" placeholder="Enter post title" value="{{$post->title}}"
-                name="title">
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="control-label col-sm-2" for="pwd">Content:</label>
-        <div class="col-sm-10">
-            <input type="text" class="edit-input" id="pwd" placeholder="Enter post content" value="{{$post->content}}"
-                name="content">
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="control-label col-sm-2" for="pwd">Image:</label>
-        <div class="col-sm-10">
-            <input type="file" class="edit-input" id="pwd" placeholder="Enter Image" value="{{$post->image}}"
-                name="image">
-        </div>
-    </div>
 
-    <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-success">Update</button>
+@section('contents')
+<div class="edit-post-container">
+    <h3 class="edit-post-title">Edit Post</h3>
+    <hr class="divider">
+
+    <form action="{{ url("/addpost/$post->id") }}" method="POST" enctype="multipart/form-data" class="edit-form">
+        @method("put")
+        @csrf
+        <div class="form-group">
+            <label for="user_id" class="form-label">User:</label>
+            <select class="form-control edit-input" id="user_id" name="user_id">
+                @foreach($user_list as $user)
+                    <option value="{{$user->id}}" {{ $user->id == $post->user_id ? 'selected' : '' }}>{{$user->name}}</option>
+                @endforeach
+            </select>
         </div>
-    </div>
-</form>
+        <div class="form-group">
+            <label for="title" class="form-label">Title:</label>
+            <input type="text" class="form-control" id="title" placeholder="Enter post title"
+                value="{{ $post->title }}" name="title">
+        </div>
+        <div class="form-group">
+            <label for="content" class="form-label">Content:</label>
+            <textarea class="form-control" id="content" placeholder="Enter post content"
+                name="content">{{ $post->content }}</textarea>
+        </div>
+        <div class="form-group">
+            <label for="image" class="form-label">Image:</label>
+            <input type="file" class="form-control" id="image" name="image">
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-success btn-update">Update Post</button>
+        </div>
+    </form>
+</div>
 @endsection
+

@@ -21,7 +21,6 @@ class PostController extends Controller
             ->when($search, function ($query) use ($search) {
                 $query->where('title', 'like', '%' . $search . '%');
             })->paginate(5);
-          //  dd($data);
         return view('post.index', $data);
     }
     /**
@@ -43,7 +42,6 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
         $validated = $request->validate([
             'title' => 'required|max:255',
             'content' => 'required|max:255',
@@ -58,9 +56,7 @@ class PostController extends Controller
             $file->move(public_path('uploads/'), $filename);
             $post->image = 'uploads/' . $filename;
         }
-        //   dd($post);
         $post->user_id = $request->user_id;
-
         $post->save();
         return redirect('/addpost');
     }
@@ -85,14 +81,12 @@ class PostController extends Controller
     public function edit($id)
     {
         $post = Post::find($id);
-        //dd($post);
         if (!$post) {
             return redirect("/addpost");
         }
-        $post["post"] = $post;
-        $post["user_list"] = User::get();
-        //dd($post);
-        return view('post.edit', $post);
+        $data["post"] = $post;
+        $data["user_list"] = User::get();
+        return view('post.edit', $data);
     }
 
     /**
@@ -106,11 +100,11 @@ class PostController extends Controller
     {
         $post = Post::find($id);
         if (!$post) {
-            return redirect("/addImage");
+            return redirect("/addpost");
         }
         $post->title = $request->title;
         $post->content = $request->content;
-        if (!empty($request->post)) {
+        if (!empty($request->file('image'))) {
             $file = $request->file('image');
             $extension = $file->getClientOriginalExtension();
             $filename = time() . '.' . $extension;
@@ -119,7 +113,7 @@ class PostController extends Controller
         }
         $post->user_id = $request->user_id;
         $post->save();
-        return redirect("/addImage");
+        return redirect("/addpost");
     }
 
     /**
