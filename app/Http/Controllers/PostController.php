@@ -132,3 +132,5 @@ class PostController extends Controller
         return redirect("/addpost");
     }
 }
+
+//akjsdfhasdghsoidfhvaskjfdhujxcnalivbiarefndskczxuerx,
